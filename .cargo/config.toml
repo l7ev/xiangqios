@@ -1,4 +1,5 @@
-
+[target.'cfg(target_os = "none")']
+runner = "bootimage runner"
 
 [unstable]
 json-target-spec = true
