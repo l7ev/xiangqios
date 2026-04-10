@@ -4,7 +4,6 @@ use alloc::vec::Vec;
 
 
 use super::*;
-use core::{cmp::Ordering, fmt::Pointer};
 
 pub const MAX_MOVES: u8 = 17;
 

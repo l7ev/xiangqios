@@ -128,8 +128,9 @@ impl Position {
         }
     }
 
+    // could just use orthogonal_distance but would have an unnecessary check, distance will the same for cols or rows
     pub fn diagonal_distance(&self, new_pos: Self) -> i8 {
-        if 
+        (self.col - new_pos.col).abs
     }
 
     // orthogonal - horizontal and vertical
@@ -162,6 +163,39 @@ impl Position {
 
     }
 
-    
+    pub fn diagonals_to(&self, to_pos: Self) -> Vec<Self> {
+        if !self.is_diagonal_to(to_pos) {
+            return Vec::new();
+        }
+        
+        let mut row_step:i8 = 0;
+        let mut col_step:i8 = 0;
+
+        if self.is_above(to_pos){
+            row_step = -1;
+        } else if self.is_below(to_pos) {
+            row_step = 1;
+        } else if self.is_right_of(to_pos) {
+            col_step = -1
+        } else if self.is_left_of(to_pos) {
+            col_step = 1
+        }
+        let accumulator = *self;
+        let mut result = Vec::new();
+        // iterate through the otthogonal distance between points and increase or decrease col/ row then push to Vec
+        //just need to interate use '_'
+        //same functon for orthogonals_to, since we add the row step and col step either way
+        for _ in 0..self.diagonal_distance(to_pos) {
+            accumulator.add_col(col_step).add_row(row_step);
+            result.push(accumulator);
+        }
+        result
+        
+    }
+
+    pub fn is_horse_move(&self, other: Self) -> bool {
+        (self.row - other.row).abs() == 2 && (self.col - other.col).abs() == 1
+            || (self.row - other.row).abs() == 1 && (self.col - other.col).abs() == 2
+    }
 
 }
