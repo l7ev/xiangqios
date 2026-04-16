@@ -15,8 +15,6 @@ The long term goal is a standalone Xiangqi OS that boots into a playable game wi
 
 ## OS Kernel
 
-> Primary development by [@kamui-fin](https://github.com/kamui-fin)
-
 The kernel started from Phil Opp's blog OS series as a foundation and has since diverged significantly with a custom bootloader and expanding feature set.
 
 ### Current State
@@ -45,8 +43,6 @@ The bootloader is written in a combination of x86 Assembly (stage 1) and Rust (s
 
 ## Xiangqi Engine
 
-> Primary development by [@l7ev](https://github.com/l7ev)
-
 A no_std Xiangqi game logic engine designed to run in bare metal environments. Array-based board representation with complete game logic.
 
 ### Current State
@@ -73,54 +69,3 @@ A no_std Xiangqi game logic engine designed to run in bare metal environments. A
 - Move validation test suite
 - Engine support (search + evaluation)
 
----
-
-## Repository Structure
-
-```
-.
-├── src/                  # OS kernel source
-│   ├── main.rs
-│   ├── interrupts.rs
-│   ├── gdt.rs
-│   ├── vga_buffer.rs
-│   └── ...
-├── tests/                # Kernel integration tests
-├── xiangqi-engine/       # Xiangqi game logic engine (no_std)
-│   └── src/
-├── .cargo/
-│   └── config.toml       # Target: x86_64 bare metal
-├── x86_64-xiangqios.json # Custom target spec
-└── Cargo.toml
-```
-
----
-
-## Building
-
-Requires a nightly Rust toolchain and `bootimage`:
-
-```bash
-rustup override set nightly
-cargo build
-```
-
-To run in QEMU:
-
-```bash
-cargo run
-```
-
----
-
-## Contributors
-
-- [@kamui-fin](https://github.com/kamui-fin) — OS kernel, bootloader, scheduler, memory, syscalls
-- [@l7ev](https://github.com/l7ev) — Xiangqi engine, graphics
-
----
-
-## Acknowledgements
-
-- [Phil Opp's Writing an OS in Rust](https://os.phil-opp.com/) — initial kernel scaffolding
-- [Pikafish](https://pikafish.org/) — reference for Xiangqi engine concepts
