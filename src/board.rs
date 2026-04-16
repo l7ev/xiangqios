@@ -1,7 +1,7 @@
 use crate::{piece::{Piece, PieceType}, position::Position};
 extern crate alloc;
 use super::*;
-use core::{panic};
+use core::panic;
 use alloc::vec;
 use alloc::vec::Vec;
 
@@ -70,6 +70,7 @@ pub struct Board {
     
     points: [Option<Piece>; 90],
     turn: Color,
+    full_move: u8,
 }
 
 impl Board {
@@ -86,6 +87,25 @@ impl Board {
         result.points[from_point] = None;
     
         result
+    }
+
+    #[inline]
+    pub fn set_turn(&self, color:Color) -> Self{
+        let mut result = *self;
+        result.turn = color;
+        result
+    }
+
+    #[inline] 
+    pub fn set_full_move(&self, fm: u8) -> Self {
+        let mut result = *self;
+        result.full_move = fm;
+        result
+    }
+
+    #[inline]
+    pub fn get_full_move(&self) -> u8 {
+        self.full_move
     }
 
     pub(crate) fn is_legal_move(&self, m: Move, player_color: Color) -> bool {
@@ -111,6 +131,7 @@ impl Board {
         Self {
             points: [None; 90],
             turn: Color::Red, 
+            full_move: 1,
         }
     }
 
@@ -236,6 +257,10 @@ impl Board {
             }
         }
         panic!()
+    }
+
+    pub fn is_stalemate(&self) -> bool {
+         self.get_legal_moves().is_empty() && !self.is_in_check(self.get_current_player_color())
     }
 
     /// Play a move and confirm it is legal.
