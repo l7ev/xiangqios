@@ -1,3 +1,6 @@
+> **Note:** XiangqiOS has continued development as [qi-os](https://github.com/kamui-fin/qi-os) 
+> where active development of the full OS is ongoing.
+
 # XiangqiOS
 
 A hobby operating system built around Chinese Chess (Xiangqi) — combining a from-scratch x86 OS kernel with a fully featured no_std Xiangqi game engine.
