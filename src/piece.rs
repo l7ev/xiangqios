@@ -1,7 +1,12 @@
-use crate::{Color, Move};
+use crate::{BLACK, Color, Move, RED, piece};
 use crate::board::Board;
 use crate::position::Position;
 use alloc::vec::Vec;
+use crate::fen::PieceParseError;
+
+//this will only be used to complete our FEN char to Piece matching,
+//is immediately overwritten once returned to caller
+const TEMP_POS: Position = Position::new(0, 0);
 
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
@@ -21,6 +26,33 @@ pub struct Piece {
     pub piece_type: PieceType,
     pub pos: Position,
     pub color: Color,
+}
+
+impl TryFrom<char> for Piece {
+    type Error = PieceParseError;
+
+    fn try_from(c: char) -> Result<Self, Self::Error> {
+        match c {
+
+            'P' => Ok(Piece { piece_type: PieceType::Pawn,     pos: TEMP_POS, color: RED}),
+            'H' => Ok(Piece { piece_type: PieceType::Horse,    pos: TEMP_POS, color: RED}),
+            'B' => Ok(Piece { piece_type: PieceType::Elephant, pos: TEMP_POS, color: RED}),
+            'R' => Ok(Piece { piece_type: PieceType::Rook,     pos: TEMP_POS, color: RED}),
+            'C' => Ok(Piece { piece_type: PieceType::Cannon,   pos: TEMP_POS, color: RED}),
+            'K' => Ok(Piece { piece_type: PieceType::General,  pos: TEMP_POS, color: RED}),
+            'A' => Ok(Piece { piece_type: PieceType::Advisor,  pos: TEMP_POS, color: RED}),
+            
+            'p' => Ok(Piece { piece_type: PieceType::Pawn,     pos: TEMP_POS, color: BLACK}),
+            'h' => Ok(Piece { piece_type: PieceType::Horse,    pos: TEMP_POS, color: BLACK}),
+            'b' => Ok(Piece { piece_type: PieceType::Elephant, pos: TEMP_POS, color: BLACK}),
+            'r' => Ok(Piece { piece_type: PieceType::Rook,     pos: TEMP_POS, color: BLACK}),
+            'c' => Ok(Piece { piece_type: PieceType::Cannon,   pos: TEMP_POS, color: BLACK}),
+            'k' => Ok(Piece { piece_type: PieceType::General,  pos: TEMP_POS, color: BLACK}),
+            'a' => Ok(Piece { piece_type: PieceType::Advisor,  pos: TEMP_POS, color: BLACK}),
+            
+            _ => Err(PieceParseError::InvalidChar(c)),
+        }
+    }
 }
 
 impl Piece {
